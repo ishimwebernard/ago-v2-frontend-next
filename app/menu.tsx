@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils"
 import { Icons } from "../components/icons"
 import {Button} from "../components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useRouter } from 'next/navigation'
 
 import {
   NavigationMenu,
@@ -69,6 +70,9 @@ const components: { title: string; href: string; description: string }[] = [
 
 
 export default function Menu() {
+const [searchtext, setSearchText] = useState('')
+const router = useRouter()
+
   return (
   <div className="flex justify-between py-4 px-10">
       <NavigationMenu>
@@ -148,8 +152,12 @@ export default function Menu() {
         Search accross all categories of our products
       </DialogDescription>
       <div className="flex gap-4">
-      <Input type="email" placeholder="Search Item" />
-      <Button type="submit">Search</Button>
+      <Input type="email" placeholder="Search Item" onChange={(e)=>{
+        setSearchText(e.target.value)
+      }}/>
+      <Button type="submit" onClick={()=>{
+        router.push(`/search/${searchtext}`)
+      }}>Search</Button>
       </div>
     </DialogHeader>
   </DialogContent>
