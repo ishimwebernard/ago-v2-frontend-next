@@ -140,11 +140,10 @@ export default function Menu() {
     <DialogHeader>
       <DialogTitle>Search for an item in our store!</DialogTitle>
       <DialogDescription>
-        This action cannot be undone. This will permanently delete your account
-        and remove your data from our servers.
+        Search accross all categories of our products
       </DialogDescription>
       <div className="flex gap-4">
-      <Input type="email" placeholder="Email" />
+      <Input type="email" placeholder="Search Item" />
       <Button type="submit">Search</Button>
       </div>
     </DialogHeader>
