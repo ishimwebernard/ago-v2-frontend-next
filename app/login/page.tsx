@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -15,8 +17,10 @@ import {
   TabsList,
   TabsTrigger,
 } from "@/components/ui/tabs"
+import {useRouter} from "next/navigation"
 
 export default function Login() {
+  const router = useRouter();
   return (
     <div className="grid grid-cols content-center h-screen w-screen">
       <div className="flex justify-center w-full">
@@ -93,7 +97,9 @@ export default function Login() {
              </div>
            </CardContent>
            <CardFooter>
-             <Button>Login</Button>
+             <Button onClick={()=>{
+              
+             }}>Login</Button>
            </CardFooter>
          </Card>
        </TabsContent>

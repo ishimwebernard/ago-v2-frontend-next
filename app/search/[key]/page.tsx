@@ -14,12 +14,6 @@ type Found = {
         description: string,
         costprice: number,
 }
-// async function getSearchItem(key: string){
-//     const response = await fetch(`http://localhost:3000/stockitems?key=${key}`,{
-//         method: 'GET'
-//     })
-//     return response.json()
-// }
 
 export default  function Search({ params }: any){
     const [found, setFound] = useState<Found | null> (null)
