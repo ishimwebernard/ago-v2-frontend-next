@@ -135,8 +135,8 @@ export default function Menu() {
   <DialogTrigger>
   <div className="flex items-center justify-between px-4 py-2 bg-gray-100 hover:bg-gray-300 rounded-lg cursor-pointer w-64">
   <span className="text-gray-700 font-small">Search product</span>
-  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 text-gray-600">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M11 19a8 8 0 100-16 8 8 0 000 16zm10-4l-4-4" />
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="w-5 h-5 text-gray-600">
+    <path strokeLinecap="round" strokeLinejoin="round" d="M11 19a8 8 0 100-16 8 8 0 000 16zm10-4l-4-4" />
   </svg>
 </div>
 
