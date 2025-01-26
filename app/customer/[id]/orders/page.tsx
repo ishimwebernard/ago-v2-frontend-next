@@ -1,23 +1,14 @@
-"use client"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/customer-sidebar"
-import {useEffect} from "react"
 
-export default function Customer({params}:any) {
-
-    useEffect(()=>{
-        console.log(params.id)
-        localStorage.setItem("agoshoppinglogedinid",String(params.id))
-
-    }, [])
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar />
       <main>
         <SidebarTrigger />
         <div>
-            <p>This is it</p>
-            <p>{params.id}</p>
+            <p>This Order</p>
         </div>
       </main>
     </SidebarProvider>
