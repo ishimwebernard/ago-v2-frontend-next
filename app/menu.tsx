@@ -162,7 +162,9 @@ const router = useRouter()
     </DialogHeader>
   </DialogContent>
 </Dialog>
-    <Button>Login</Button>
+    <Button onClick={()=>{
+      router.push('/login')
+    }}>Login</Button>
 
   </div>
   )

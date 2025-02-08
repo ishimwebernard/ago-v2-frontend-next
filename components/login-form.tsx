@@ -40,7 +40,10 @@ export function LoginForm({
         url: `http://localhost:3000/${role}/login`,
         data: {phonenumber, password}
       })
+
       if (auth.status == 200){
+        await localStorage.setItem("agoshoppinglogedinid", auth.data.user.id)
+
         router.push(`/customer/${auth.data.user.id}`)
       }
     }catch(err){

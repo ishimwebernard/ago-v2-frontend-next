@@ -5,11 +5,6 @@ import {useEffect} from "react"
 
 export default function Customer({params}:any) {
 
-    useEffect(()=>{
-        console.log(params.id)
-        localStorage.setItem("agoshoppinglogedinid",String(params.id))
-
-    }, [])
   return (
     <SidebarProvider>
       <AppSidebar />

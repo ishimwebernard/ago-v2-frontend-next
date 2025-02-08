@@ -84,10 +84,35 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 <div className="flex space-x-4">
                 {cSlaves}
                 </div>
-                <div className="mt-4">
-                  <CardTitle>Account Details</CardTitle>
+                <CardTitle className="mt-4">Account Details</CardTitle>
+                <div className="grid grid-cols-2 gap-4">
+                  
+                  <div>
+                    <Label htmlFor="name">Name</Label>
+                    <Input id="name" value={cInfo.name} disabled/>
+                  </div>
+                  <div>
+                    <Label htmlFor="email">E-mail</Label>
+                    <Input id="email" value={cInfo.email} disabled/>
+                  </div>
+                  <div>
+                    <Label htmlFor="join">Joined At</Label>
+                    <Input id="join" value={cInfo.createdAt} disabled/>
+                  </div>
+                  <div>
+                    <Label htmlFor="join">Profit Distributed</Label>
+                    <Input id="join" value={"Rwf "+" "+cInfo.pfr} disabled/>
+                  </div>
+                  <div>
+                    <Label htmlFor="join">Password</Label>
+                    <Input id="join" value={cInfo.password} type="password" disabled/>
+                  </div>
+                  <div>
+                    <Label htmlFor="join">Percentage to distribute</Label>
+                    <Input id="join" value={cInfo.percentagetogive + "%"}  disabled/>
+                  </div>
                 </div>
-
+                
               </CardContent>
             </CardHeader>
           </Card>

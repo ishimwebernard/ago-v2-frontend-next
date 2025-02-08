@@ -1,5 +1,7 @@
+"use client"
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
-
+import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
 import {
   Sidebar,
   SidebarContent,
@@ -11,26 +13,33 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-// Menu items.
+
+
+export function AppSidebar() {
+  const [activeId, setActiveId] =  useState<string | null>("")
+
+  useEffect(()=>{
+  setActiveId(localStorage.getItem("agoshoppinglogedinid"))
+  })
+const path = usePathname().split("/")[1]
+console.log(path)
 const items = [
   {
     title: "Home",
-    url: "",
+    url: ("/customer/"+activeId),
     icon: Home,
   },
   {
     title: "Orders",
-    url: "orders",
+    url: ("/customer/"+activeId+"/orders"),
     icon: Inbox,
   },
   {
     title: "Account",
-    url: "account",
+    url: ("/customer/"+activeId+"/account"),
     icon: Calendar,
   },
 ]
-
-export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarContent>
