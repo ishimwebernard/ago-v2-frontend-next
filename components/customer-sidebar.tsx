@@ -39,6 +39,11 @@ const items = [
     url: ("/customer/"+activeId+"/account"),
     icon: Calendar,
   },
+  {
+    title: "Log Out",
+    url: ("/"),
+    icon: Calendar,
+  }
 ]
   return (
     <Sidebar>

@@ -38,7 +38,12 @@ const items = [
     title: "Sales",
     url: ("/shopkeeper/"+activeId+"/sales"),
     icon: Calendar,
-  },
+  },,
+  {
+    title: "Log Out",
+    url: ("/"),
+    icon: Calendar,
+  }
 ]
   return (
     <Sidebar>

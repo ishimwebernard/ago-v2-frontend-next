@@ -108,8 +108,16 @@ export default function Shopkeeper(){
 
                 </select>
                 
-                <Button onClick={()=>{
+                <Button onClick={async()=>{
                     console.log(newStat)
+                    const res = await axios({
+                        url: 'http://localhost:3000/orders/'+item.id+'/status',
+                        method: 'put',
+                        data:{status: newStat}
+                    })
+                    console.log(res.data)
+                    window.location.reload()
+                    
                 }}>Save</Button>
                 </div>
               </TableFooter>

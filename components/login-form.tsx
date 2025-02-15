@@ -40,12 +40,24 @@ export function LoginForm({
         url: `http://localhost:3000/${role}/login`,
         data: {phonenumber, password}
       })
+      await localStorage.setItem("agoshoppinglogedinid", auth.data.user.id)
 
-      if (auth.status == 200){
-        await localStorage.setItem("agoshoppinglogedinid", auth.data.user.id)
+      switch (role){
+        case "customers":
+          router.push(`/customer/${auth.data.user.id}`)
+          break;
+        case "shopkeepers":
+          router.push(`/shopkeeper/${auth.data.user.id}`)
+          break;
+        case "managers":
+          router.push(`/manager/${auth.data.user.id}`)
+          break;
+        default:
+          console.log("break")
 
-        router.push(`/customer/${auth.data.user.id}`)
       }
+     
+      
     }catch(err){
       console.log(err)
     }
