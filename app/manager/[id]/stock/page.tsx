@@ -30,7 +30,15 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
 import { WarningProvider } from "@radix-ui/react-dialog"
-
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+  } from "@/components/ui/select"
 
 
 export default function Shopkeeper(){
@@ -38,6 +46,7 @@ export default function Shopkeeper(){
     //const router = useRouter()
     const [stockGraphics, setStockGraphics] = useState([])
     const [shopkeepers, setShopkeepers] = useState([])
+
     let editedItem = {
         name: '',
         quantity: 0,
@@ -47,7 +56,7 @@ export default function Shopkeeper(){
         description: ''
     }
 
-    let newItem =  { shopkeeperId: lePath, 
+    let newItem =  { shopkeeperId: 0, 
       name: '', 
       quantity: 0, 
       price: 0, 
@@ -197,11 +206,15 @@ export default function Shopkeeper(){
 
         async function findShopkeepers(){
             try{
+                let tempArray = []
                 const shopkeepers = await axios({
                     method: 'get',
-                    url: 'http://localhost:3000/getstockitems',
+                    url: 'http://localhost:3000/shopkeepers',
                 })
-                setShopkeepers(shopkeepers.data)
+                shopkeepers.data.forEach((item: any)=>{
+                    tempArray.push(<option value={item.id}>{item.name}</option>)
+                })
+                setShopkeepers(tempArray)
 
             }catch(error){
                 toast("error", {description: "Something went wrong"})
@@ -257,8 +270,16 @@ export default function Shopkeeper(){
                     newItem = {...newItem, description: e.target.value}
                   }}/>
                 </div>
+                  <div>
+                    <Label htmlFor="select">Assign to Shopkeeper</Label>
+                    <select id="select" onChange={(e)=>{
+                          newItem = {...newItem, shopkeeperId: parseInt(e.target.value)}
+                        }}>
+                      {shopkeepers}
+                    </select>
+                  </div>
               </div>
-                   <DialogFooter>
+              <DialogFooter>
               <Button onClick={async()=>{
                 try{
                   const res = await axios({
