@@ -1,6 +1,6 @@
 "use client"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/shopkeeper-sidebar"
+import { AppSidebar } from "@/components/manager-sidebar"
 import { usePathname } from "next/navigation"
 //import { useRouter } from "next/router";
 import {useEffect, useState} from "react"
@@ -37,6 +37,7 @@ export default function Shopkeeper(){
     const lePath = usePathname().split('/')[2]
     //const router = useRouter()
     const [stockGraphics, setStockGraphics] = useState([])
+    const [shopkeepers, setShopkeepers] = useState([])
     let editedItem = {
         name: '',
         quantity: 0,
@@ -61,12 +62,13 @@ export default function Shopkeeper(){
             const tempStock = []
             const shopExistingStock = await axios({
                 method: 'get',
-                url: 'http://localhost:3000/getstockitems/'+lePath
+                url: 'http://localhost:3000/getstockitems'
             })
             shopExistingStock.data.forEach((item)=>{
                 tempStock.push(
                     <TableRow>
                     <TableCell>{item.id}</TableCell>
+                    <TableCell>{item.shopkeeperId}</TableCell>
                     <TableCell>{item.name}</TableCell>
                     <TableCell>{item.quantity}</TableCell>
                     <TableCell>{item.price}</TableCell>
@@ -192,7 +194,21 @@ export default function Shopkeeper(){
             console.log(tempStock)
             setStockGraphics(tempStock)
         }
+
+        async function findShopkeepers(){
+            try{
+                const shopkeepers = await axios({
+                    method: 'get',
+                    url: 'http://localhost:3000/getstockitems',
+                })
+                setShopkeepers(shopkeepers.data)
+
+            }catch(error){
+                toast("error", {description: "Something went wrong"})
+            }
+        }
         fetchStock()
+        findShopkeepers()
     }, [])
     return (
         <SidebarProvider>
@@ -273,6 +289,7 @@ export default function Shopkeeper(){
             <TableHeader>
                 <TableRow>
                     <TableHead>Stock Item ID</TableHead>
+                    <TableHead>Shopkeeper ID</TableHead>
                     <TableHead className="w-[200px]">Name</TableHead>
                     <TableHead>Quantity</TableHead>
                     <TableHead>S. Price</TableHead>
