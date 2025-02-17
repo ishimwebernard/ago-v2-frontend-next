@@ -16,27 +16,23 @@ import {
 
 
 export function AppSidebar() {
-  const [activeId, setActiveId] =  useState<string | null>("")
 
-  useEffect(()=>{
-  setActiveId(localStorage.getItem("agoshoppinglogedinid"))
-  })
-const path = usePathname().split("/")[1]
+const path = JSON.parse(localStorage.getItem("logedin-user") || "null").id
 console.log(path)
 const items = [
   {
     title: "Home",
-    url: ("/customer/"+activeId),
+    url: ("/customer/"+path),
     icon: Home,
   },
   {
     title: "Orders",
-    url: ("/customer/"+activeId+"/orders"),
+    url: ("/customer/"+path+"/orders"),
     icon: Inbox,
   },
   {
     title: "Account",
-    url: ("/customer/"+activeId+"/account"),
+    url: ("/customer/"+path+"/account"),
     icon: Calendar,
   },
   {

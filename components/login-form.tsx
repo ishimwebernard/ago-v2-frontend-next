@@ -35,27 +35,35 @@ export function LoginForm({
 
   const login = async({phonenumber, password, role}:any)=>{
     try{
+      let store = {
+        id: 0,
+        role: 0,
+        name: ''
+      }
       const auth = await axios({
         method: "post",
         url: `http://localhost:3000/${role}/login`,
         data: {phonenumber, password}
       })
-      await localStorage.setItem("agoshoppinglogedinid", auth.data.user.id)
-
+      store = {...store, id: parseInt(auth.data.user.id), name: auth.data.user.name}
       switch (role){
         case "customers":
+          store = {...store, role: 3}
           router.push(`/customer/${auth.data.user.id}`)
           break;
         case "shopkeepers":
+          store = {...store, role: 2}
           router.push(`/shopkeeper/${auth.data.user.id}`)
           break;
         case "managers":
+          store = {...store, role: 1}
           router.push(`/manager/${auth.data.user.id}`)
           break;
         default:
           console.log("break")
 
       }
+      localStorage.setItem("logedin-user", JSON.stringify(store))
      
       
     }catch(err){

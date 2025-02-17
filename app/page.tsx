@@ -10,22 +10,39 @@ import {
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import {useState, useEffect} from "react"
 import { Button } from "@/components/ui/button"
-
+  import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
+  const [goal, setGoal] = useState(350)
+ 
   const [datagraphics, setDataGraphics] = useState([])
-
+  const [refresher, setRefresher] = useState(true)
+  let cartItems:any[] = []
   const searchforData = async() =>{
+    cartItems = JSON.parse(localStorage.getItem('cart') || "null") || [] 
     try{
         const response = await fetch(`http://localhost:3000/getstockitems`,{
             method: 'GET'
         })
-
+ 
         if (response) {
             const proper = await response.json()
-            let properGraphics = []
-            properGraphics = proper.map((item, index)=>(
-                <Card>
+            let properGraphics:any[] = []
+            let footer:any;
+            proper.forEach((item, index)=>{
+              let foundItem = cartItems.find(it => item.id === it.id)
+              if (foundItem){
+                footer = (<Button disabled>Added to Cart</Button>)
+                setRefresher(!refresher)
+              }else{
+               footer = (<Button onClick={()=>{
+                cartItems.push(item)
+              localStorage.setItem('cart', JSON.stringify(cartItems))
+              window.location.reload()                        
+               }}>Add to cart</Button>)
+              }
+               properGraphics.push(
+               <Card>
                 <CardHeader>
                     <CardTitle>
                     {item.name}
@@ -42,10 +59,10 @@ export default function Home() {
                     
                 </CardContent>
                 <CardFooter>
-                    <Button>Add to cart</Button>
+                  {footer} 
                 </CardFooter>
-            </Card>
-            ))
+            </Card>)
+            })
             setDataGraphics(properGraphics)
         }
 

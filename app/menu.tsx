@@ -27,7 +27,49 @@ import {
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
-
+  import {
+    Cloud,
+    CreditCard,
+    Github,
+    Keyboard,
+    LifeBuoy,
+    LogOut,
+    Mail,
+    MessageSquare,
+    Plus,
+    PlusCircle,
+    Settings,
+    User,
+    UserPlus,
+    Users,
+  } from "lucide-react"
+  import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuPortal,
+    DropdownMenuSeparator,
+    DropdownMenuShortcut,
+    DropdownMenuSub,
+    DropdownMenuSubContent,
+    DropdownMenuSubTrigger,
+    DropdownMenuTrigger,
+  } from "@/components/ui/dropdown-menu"
+   
+  import {
+    Drawer,
+    DrawerClose,
+    DrawerContent,
+    DrawerDescription,
+    DrawerFooter,
+    DrawerHeader,
+    DrawerTitle,
+    DrawerTrigger,
+  } from "@/components/ui/drawer"
+  import {Table, TableHeader, TableHead, TableRow, TableCell, TableBody} from "@/components/ui/table"
+  import { v4 as uuidv4 } from 'uuid';
 
 const components: { title: string; href: string; description: string }[] = [
   {
@@ -71,8 +113,124 @@ const components: { title: string; href: string; description: string }[] = [
 
 export default function Menu() {
 const [searchtext, setSearchText] = useState('')
+const [upGraphics, setUpGraphics] = useState(
+  <Button onClick={()=>{
+  router.push('/login')
+}}>Login</Button>
+)
 const router = useRouter()
+  useEffect(()=>{
+const findDetails = () =>{
+  let cartItems:any[] = []
+  const logedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null")
+  if (logedinUser){
+    setUpGraphics(
+   <div>
+       <Drawer onOpenChange={()=>{
+        cartItems = []
+        const items:any = JSON.parse(localStorage.getItem('cart')) || []
+        console.log(items)
+        items.forEach((item)=>{
+          console.log(item)
+          cartItems.push(
+            <TableRow key={uuidv4()}>
+              <TableCell>{item.name}</TableCell>
+              <TableCell>1</TableCell>
+              <TableCell>{item.price}</TableCell>
 
+            </TableRow>
+          )
+        })
+      }}>
+      <DrawerTrigger asChild>
+        <Button variant="outline">Open Drawer</Button>
+      </DrawerTrigger>
+      <DrawerContent >
+        <div className="mx-auto w-full max-w-sm">
+          <DrawerHeader>
+            <DrawerTitle>Move Goal</DrawerTitle>
+            <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+          </DrawerHeader>
+          <div className="p-4 pb-0" onClick={()=>{
+          
+          }}>
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Item</TableHead>
+                  <TableHead>Quantity</TableHead>
+                  <TableHead>U. Price</TableHead>
+                  <TableHead>Total</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {cartItems}
+              </TableBody>
+            </Table>
+           
+          </div>
+          <DrawerFooter>
+            <Button>Proceed to Checkout</Button>
+            <Button variant="outline" onClick={()=>{
+              localStorage.removeItem('cart')
+              window.location.reload()
+            }}>Clear Cart</Button>
+            <DrawerClose asChild>
+              <Button variant="outline">Cancel</Button>
+            </DrawerClose>
+          </DrawerFooter>
+        </div>
+      </DrawerContent>
+    </Drawer>
+      <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <Button variant="outline">
+        <User />
+        </Button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent className="w-56">
+        <DropdownMenuLabel>{logedinUser.name}</DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuGroup>
+          <DropdownMenuItem>
+            <User />
+            <span>Profile</span>
+            <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <CreditCard />
+            <span>Billing</span>
+            <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Settings />
+            <span>Settings</span>
+            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+          </DropdownMenuItem>
+          <DropdownMenuItem>
+            <Keyboard />
+            <span>Keyboard shortcuts</span>
+            <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+        <DropdownMenuItem onClick={()=>{
+          localStorage.removeItem('cart')
+            localStorage.removeItem('logedin-user')
+            window.location.reload()
+          }}>
+          <LogOut />
+          <span>Log out</span>
+          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+   </div>
+    )
+  }
+}
+
+findDetails();
+  }, [])
   return (
   <div className="flex justify-between py-4 px-10">
       <NavigationMenu>
@@ -162,9 +320,7 @@ const router = useRouter()
     </DialogHeader>
   </DialogContent>
 </Dialog>
-    <Button onClick={()=>{
-      router.push('/login')
-    }}>Login</Button>
+{upGraphics}
 
   </div>
   )
