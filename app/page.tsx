@@ -10,23 +10,23 @@ import {
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import {useState, useEffect} from "react"
 import { Button } from "@/components/ui/button"
+import axios from "axios"
   import { v4 as uuidv4 } from 'uuid';
 
-export default function Home() {
-  const [goal, setGoal] = useState(350)
- 
+export default function Home() { 
   const [datagraphics, setDataGraphics] = useState([])
   const [refresher, setRefresher] = useState(true)
   let cartItems:any[] = []
   const searchforData = async() =>{
     cartItems = JSON.parse(localStorage.getItem('cart') || "null") || [] 
     try{
-        const response = await fetch(`http://localhost:3000/getstockitems`,{
+        const response = await axios({
+            url: 'http://localhost:3000/getstockitems',
             method: 'GET'
         })
  
         if (response) {
-            const proper = await response.json()
+            const proper = response.data
             let properGraphics:any[] = []
             let footer:any;
             proper.forEach((item, index)=>{
@@ -42,7 +42,7 @@ export default function Home() {
                }}>Add to cart</Button>)
               }
                properGraphics.push(
-               <Card>
+               <Card key={uuidv4()}>
                 <CardHeader>
                     <CardTitle>
                     {item.name}

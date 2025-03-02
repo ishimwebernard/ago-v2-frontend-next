@@ -127,29 +127,31 @@ const findDetails = () =>{
     setUpGraphics(
    <div>
        <Drawer onOpenChange={()=>{
-        cartItems = []
-        const items:any = JSON.parse(localStorage.getItem('cart')) || []
-        console.log(items)
-        items.forEach((item)=>{
-          console.log(item)
-          cartItems.push(
-            <TableRow key={uuidv4()}>
-              <TableCell>{item.name}</TableCell>
-              <TableCell>1</TableCell>
-              <TableCell>{item.price}</TableCell>
-
-            </TableRow>
-          )
-        })
+      
       }}>
       <DrawerTrigger asChild>
-        <Button variant="outline">Open Drawer</Button>
+        <Button variant="outline" onClick={()=>{
+            cartItems = []
+            const items:any = JSON.parse(localStorage.getItem('cart')) || []
+            items.forEach((item)=>{
+              cartItems.push(
+                <TableRow key={uuidv4()}>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell>1</TableCell>
+                  <TableCell>{item.price}</TableCell>
+    
+                </TableRow>
+              )
+            })
+
+            console.log(cartItems)
+        }}>Cart</Button>
       </DrawerTrigger>
       <DrawerContent >
         <div className="mx-auto w-full max-w-sm">
           <DrawerHeader>
-            <DrawerTitle>Move Goal</DrawerTitle>
-            <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+            <DrawerTitle>Cart Items</DrawerTitle>
+            <DrawerDescription>This is the list of all items to procees with at checkout</DrawerDescription>
           </DrawerHeader>
           <div className="p-4 pb-0" onClick={()=>{
           
