@@ -16,7 +16,7 @@ import axios from "axios"
 export default function Home() { 
   const [datagraphics, setDataGraphics] = useState([])
   const [refresher, setRefresher] = useState(true)
-  let cartItems:any[] = []
+  let cartItems:any[] = [<p>Sample stuff</p>]
   const searchforData = async() =>{
     cartItems = JSON.parse(localStorage.getItem('cart') || "null") || [] 
     try{
