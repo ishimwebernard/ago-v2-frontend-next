@@ -49,7 +49,7 @@ export function LoginForm({
       switch (role){
         case "customers":
           store = {...store, role: 3}
-          router.push(`/customer/${auth.data.user.id}`)
+          router.push(`/`)
           break;
         case "shopkeepers":
           store = {...store, role: 2}

@@ -31,6 +31,8 @@ import { Card,   CardContent,
   } from "@/components/ui/dialog"
   import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { ToastAction } from "@/components/ui/toast"
+
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [orders, setOrders] = useState([])
   useEffect(()=>{
@@ -38,7 +40,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
     const getOrders = async()=>{
       let orderGraph = []
       try{
-        const loggedinUser = await localStorage.getItem("agoshoppinglogedinid")
+        const loggedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null").id
       const data = await axios({
         method: 'GET',
         url: 'http://localhost:3000/orders/customer/'+loggedinUser,

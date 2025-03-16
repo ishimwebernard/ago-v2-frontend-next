@@ -55,7 +55,7 @@ const items = [
                       <span>{item.title}</span>
                     </a>
                   </SidebarMenuButton>
-                </SidebarMenuItem>
+                </SidebarMenuItem> 
               ))}
               <Button onClick={()=>{
                        localStorage.removeItem('cart')

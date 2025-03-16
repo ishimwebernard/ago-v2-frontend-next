@@ -176,7 +176,7 @@ const findDetails = () =>{
         <DropdownMenuItem onClick={()=>{
           localStorage.removeItem('cart')
             localStorage.removeItem('logedin-user')
-            window.location.reload()
+            router.push('/')
           }}>
           <LogOut />
           <span>Log out</span>

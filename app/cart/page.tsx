@@ -22,13 +22,18 @@ import React, {useState, useEffect} from "react"
 import {Plus, Minus} from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import axios from "axios"
-  import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
+import { Toaster } from "@/components/ui/sonner"
+import { toast } from "sonner"
+import { useRouter } from 'next/navigation'
 
 
 
 
 export default function Cart() { 
 const [updateCombo, setUpdateCombo] = useState<any>([])
+let logedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null")
+let router = useRouter()
 
   let proper:any[] = []
   let cartItems:any[] = []
@@ -77,13 +82,6 @@ const [updateCombo, setUpdateCombo] = useState<any>([])
         )
     }
 
-
-
-
-
-
-
-
 type MainType = {
     updateCombo: any,
     setUpdateCombo: React.Dispatch<React.SetStateAction<any>>
@@ -126,7 +124,39 @@ const MenuDisplayer: React.FC<MenuDisplayerType> = ({updateCombo}) =>{
            </TableRow>
         </TableBody>
     </Table>
-    <Button>Checkout</Button>
+    <Toaster />
+    <Button onClick={async()=>{
+
+        let orderFormatter = {
+            customerId: logedinUser.id, 
+            shopkeeperId: updateCombo[0].shopkeeperId, 
+            items:updateCombo,
+            total: tempTotal
+        }
+        console.log(orderFormatter)
+        try{
+            const res = await axios({
+                url: 'http://localhost:3000/orders',
+                method: 'post',
+                data: orderFormatter
+            })
+            localStorage.removeItem('cart')
+            toast(
+                'Order Succesfully Submitted',{
+                description: 'Thank you for working with Ago Shopping, you can pick up your goods any time',
+                action:{
+                    label: "Ok",
+                    onClick: ()=>{
+                        router.push("/")
+                    }
+                }}
+            )
+
+        }catch(err){
+            console.log(err)
+        }
+       
+    }}>Checkout</Button>
 
  </div>
         
@@ -173,15 +203,7 @@ return (
             cartItems.push(item)
         })
         localStorage.setItem('cart', JSON.stringify(tempCartItems))
-        setUpdateCombo(tempCartItems)
-        // setRawData(cartItems)
-        // // cartItems.forEach((item, index)=>{
-        // //     proper.push(
-        // //       <CardGraphicsItem item={item} tagNumber={index} allData={cartItems}/>
-        // //     )
-        // // })
-        // setdatagraphics(proper)
-        
+        setUpdateCombo(tempCartItems)        
     }
 
 useEffect(()=>{
@@ -189,6 +211,8 @@ useEffect(()=>{
 }, [])
   return (
     <div>
+                <Toaster />
+
       <Menu />
 <div className="px-12">
 <p className="font-bold text-4xl py-8">Shopping Cart</p>
