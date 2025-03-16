@@ -8,7 +8,17 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import {useState, useEffect} from "react"
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableFooter,
+    TableHead,
+    TableHeader,
+    TableRow,
+  } from "@/components/ui/table"
+import React, {useState, useEffect} from "react"
 import {Plus, Minus} from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import axios from "axios"
@@ -17,12 +27,27 @@ import axios from "axios"
 
 
 
-export default function Home() { 
+export default function Cart() { 
+const [updateCombo, setUpdateCombo] = useState<any>([])
+  const [datagraphics, setdatagraphics] = useState<any | null>([])
+  const [rawData, setRawData] = useState<any | null>([])
+  const [refresh, setRefresh] = useState(true)
+  const [total, setTotal] = useState<number>(0)
+  let proper:any[] = []
+  let cartItems:any[] = []
+  let globalRawData:any[] = []
 
-    let CardGraphicsItem = (item:any) =>{
+  type CardProps = {
+    item: any,
+    tagNumber: number,
+    allData: any,
+    combo: any,
+    updateComboCard: React.Dispatch<React.SetStateAction<any>>
+  }
+
+    let CardGraphicsItem:React.FC<CardProps>  = ({item, tagNumber, allData, combo,updateComboCard}) =>{
         const [qty, setQty] = useState(1)
-        let propItem = item.item
-        console.log(item)
+        let propItem = item
         return (
             <Card key={uuidv4()}>
             <CardContent>
@@ -33,11 +58,19 @@ export default function Home() {
                         <p>Rwf {propItem.price}</p>
                         <div className="flex gap-4 outline-dashed">
                             <Plus onClick={()=>{
+                               
                                 setQty(qty+1)
+                                combo[tagNumber].quantity = qty
+                                updateComboCard(combo)
+                                console.log(updateCombo)
+
+
                             }}/>
                             <p>{qty}</p>
                             <Minus onClick={()=>{
-                                setQty(qty-1)
+                             setQty(qty-1)
+                             combo[tagNumber].quantity = qty
+                             updateComboCard(combo) 
                             }}/>
                         </div>
                     </div>
@@ -47,38 +80,110 @@ export default function Home() {
         )
     }
 
-    let ReceiptMaker = () =>{
-        return (
-            <Card>
-                <CardHeader>
-                    <CardTitle>Checkout Details</CardTitle>
-                </CardHeader>
-                <CardContent>
-    
-                </CardContent>
-            </Card>
+
+
+
+
+
+
+
+type MainType = {
+    updateCombo: any,
+    setUpdateCombo: React.Dispatch<React.SetStateAction<any>>
+}
+type MenuDisplayerType = {
+    updateCombo: any,
+}
+const MenuDisplayer: React.FC<MenuDisplayerType> = ({updateCombo}) =>{
+    let graphics = []
+    let tempTotal = 0
+    updateCombo.forEach((item, index)=>{
+        graphics.push( <TableRow>
+            <TableCell>{item.name}</TableCell>
+            <TableCell>{item.quantity}</TableCell>
+            <TableCell>{item.price}</TableCell>
+            <TableCell>{item.price * item.quantity}</TableCell>
+        </TableRow>
         )
+        tempTotal = (tempTotal+(item.price*item.quantity))
+    })
+    
+    return (
+ <div className="flex flex-col p-4 gap-y-4">
+           <Table>
+        <TableHeader>
+            <TableRow>
+                <TableHead>ITEM</TableHead>
+                <TableHead>QTY</TableHead>
+                <TableHead>U.P</TableHead>
+                <TableHead>TOTAL</TableHead>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+           {graphics}
+           <TableRow>
+            <TableCell>Overall</TableCell>
+            <TableCell></TableCell>
+            <TableCell></TableCell>
+            <TableCell>{tempTotal}</TableCell>
+           </TableRow>
+        </TableBody>
+    </Table>
+    <Button>Checkout</Button>
+
+ </div>
+        
+    )
+}
+let Main: React.FC<MainType> = ({updateCombo, setUpdateCombo}) =>{
+    console.log(updateCombo)
+    proper = []
+    if(updateCombo){
+        updateCombo.forEach((item:any, index:any)=>{
+        proper.push(
+          <CardGraphicsItem item={item} tagNumber={index} allData={cartItems} updateComboCard={setUpdateCombo} combo={updateCombo}/>
+        )
+    }) 
     }
 
+return (
+<div className="grid grid-flow-col w-full gap-4">
+<div className="flex flex-col gap-4 col-span-2">
+    {proper}
+</div>
+  <Card>
+        <CardHeader>
+            <CardTitle>Checkout Details</CardTitle>
+        </CardHeader>
+        <MenuDisplayer updateCombo={updateCombo}/>
+    
+    </Card>
+</div>
+      
+    )
+}
 
-
-
-
-
-
-
-  const [datagraphics, setdatagraphics] = useState([])
-  let proper:any[] = []
-  let cartItems:any[] = [<p>Sample stuff</p>]
     const fetchItems = () =>{
-        cartItems = JSON.parse(localStorage.getItem('cart') || "null") || [] 
-        cartItems.forEach((item, index)=>{
-            proper.push(
-              <CardGraphicsItem item={item}/>
-            )
+        let tempCartItems = JSON.parse(localStorage.getItem('cart') || "null") || [] 
+        let globalThing = {
+            activeItem: -1,
+            data: []
+        }
+        cartItems = []
+        proper = []
+        tempCartItems.forEach((item:any, index:any)=>{
+            item.quantity = 1
+            cartItems.push(item)
         })
-        setdatagraphics(proper)
-        console.log(datagraphics)
+        setUpdateCombo(tempCartItems)
+        // setRawData(cartItems)
+        // // cartItems.forEach((item, index)=>{
+        // //     proper.push(
+        // //       <CardGraphicsItem item={item} tagNumber={index} allData={cartItems}/>
+        // //     )
+        // // })
+        // setdatagraphics(proper)
+        
     }
 
 useEffect(()=>{
@@ -89,12 +194,7 @@ useEffect(()=>{
       <Menu />
 <div className="px-12">
 <p className="font-bold text-4xl py-8">Shopping Cart</p>
-<div className="grid grid-flow-col w-full gap-4">
-<div className="flex flex-col gap-4 col-span-2">
-    {datagraphics}
-</div>
-<ReceiptMaker />
-</div>
+<Main updateCombo={updateCombo} setUpdateCombo={setUpdateCombo}/>
 </div>
 
 

@@ -32,7 +32,7 @@ export default function Home() {
             proper.forEach((item, index)=>{
               let foundItem = cartItems.find(it => item.id === it.id)
               if (foundItem){
-                footer = (<Button disabled>Added to Cart</Button>)
+                footer = (<Button disabled>Remove to Cart</Button>)
                 setRefresher(!refresher)
               }else{
                footer = (<Button onClick={()=>{
