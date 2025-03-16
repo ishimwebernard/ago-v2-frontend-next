@@ -121,69 +121,28 @@ const [upGraphics, setUpGraphics] = useState(
 const router = useRouter()
   useEffect(()=>{
 const findDetails = () =>{
+  let urlMaker = ''
   let cartItems:any[] = []
   const logedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null")
+  console.log("Loged in User===>", logedinUser)
+  
   if (logedinUser){
+    switch (logedinUser.role){
+      case 1:
+  
+      break;
+      case 2:
+  
+      break;
+      case 3:
+        urlMaker = '/customer/'+logedinUser.id
+      break;
+    }
     setUpGraphics(
    <div>
-       <Drawer onOpenChange={()=>{
-      
-      }}>
-      <DrawerTrigger asChild>
-        <Button variant="outline" onClick={()=>{
-            cartItems = []
-            const items:any = JSON.parse(localStorage.getItem('cart')) || []
-            items.forEach((item)=>{
-              cartItems.push(
-                <TableRow key={uuidv4()}>
-                  <TableCell>{item.name}</TableCell>
-                  <TableCell>1</TableCell>
-                  <TableCell>{item.price}</TableCell>
-    
-                </TableRow>
-              )
-            })
-
-            console.log(cartItems)
+    <Button variant="outline" onClick={()=>{
+        router.push('/cart')
         }}>Cart</Button>
-      </DrawerTrigger>
-      <DrawerContent >
-        <div className="mx-auto w-full max-w-sm">
-          <DrawerHeader>
-            <DrawerTitle>Cart Items</DrawerTitle>
-            <DrawerDescription>This is the list of all items to procees with at checkout</DrawerDescription>
-          </DrawerHeader>
-          <div className="p-4 pb-0" onClick={()=>{
-          
-          }}>
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Item</TableHead>
-                  <TableHead>Quantity</TableHead>
-                  <TableHead>U. Price</TableHead>
-                  <TableHead>Total</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {cartItems}
-              </TableBody>
-            </Table>
-           
-          </div>
-          <DrawerFooter>
-            <Button>Proceed to Checkout</Button>
-            <Button variant="outline" onClick={()=>{
-              localStorage.removeItem('cart')
-              window.location.reload()
-            }}>Clear Cart</Button>
-            <DrawerClose asChild>
-              <Button variant="outline">Cancel</Button>
-            </DrawerClose>
-          </DrawerFooter>
-        </div>
-      </DrawerContent>
-    </Drawer>
       <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline">
@@ -194,20 +153,19 @@ const findDetails = () =>{
         <DropdownMenuLabel>{logedinUser.name}</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={()=>{
+            router.push(urlMaker+'/account')
+          }}>
             <User />
             <span>Profile</span>
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={()=>{
+            router.push(urlMaker+'/orders')
+          }}>
             <CreditCard />
             <span>Billing</span>
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings />
-            <span>Settings</span>
-            <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <Keyboard />

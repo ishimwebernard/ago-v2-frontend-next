@@ -29,10 +29,7 @@ import axios from "axios"
 
 export default function Cart() { 
 const [updateCombo, setUpdateCombo] = useState<any>([])
-  const [datagraphics, setdatagraphics] = useState<any | null>([])
-  const [rawData, setRawData] = useState<any | null>([])
-  const [refresh, setRefresh] = useState(true)
-  const [total, setTotal] = useState<number>(0)
+
   let proper:any[] = []
   let cartItems:any[] = []
   let globalRawData:any[] = []
@@ -175,6 +172,7 @@ return (
             item.quantity = 1
             cartItems.push(item)
         })
+        localStorage.setItem('cart', JSON.stringify(tempCartItems))
         setUpdateCombo(tempCartItems)
         // setRawData(cartItems)
         // // cartItems.forEach((item, index)=>{

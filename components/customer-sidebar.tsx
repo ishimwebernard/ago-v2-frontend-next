@@ -2,6 +2,9 @@
 import { Calendar, Home, Inbox, Search, Settings } from "lucide-react"
 import { usePathname } from "next/navigation"
 import { useEffect, useState } from "react"
+import {Button} from "./ui/button"
+import { useRouter } from 'next/navigation'
+
 import {
   Sidebar,
   SidebarContent,
@@ -16,13 +19,14 @@ import {
 
 
 export function AppSidebar() {
+  const router = useRouter()
 
 const path = JSON.parse(localStorage.getItem("logedin-user") || "null").id
 console.log(path)
 const items = [
   {
     title: "Home",
-    url: ("/customer/"+path),
+    url: ("/"),
     icon: Home,
   },
   {
@@ -33,11 +37,6 @@ const items = [
   {
     title: "Account",
     url: ("/customer/"+path+"/account"),
-    icon: Calendar,
-  },
-  {
-    title: "Log Out",
-    url: ("/"),
     icon: Calendar,
   }
 ]
@@ -58,7 +57,13 @@ const items = [
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
+              <Button onClick={()=>{
+                       localStorage.removeItem('cart')
+                       localStorage.removeItem('logedin-user')
+                       router.push('/')
+              }}>Log Out</Button>
             </SidebarMenu>
+
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
