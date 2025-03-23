@@ -42,24 +42,26 @@ export default function Home() {
                }}>Add to cart</Button>)
               }
                properGraphics.push(
-               <Card key={uuidv4()}>
+               <Card key={uuidv4()} className="px-0 py-0">
                 <CardHeader>
-                    <CardTitle>
+                    <CardTitle className="text-md">
                     {item.name}
                     </CardTitle>
                     <CardTitle>
-                        <p className="text-xl font-bold leading-tight">Rwf. {item.price}</p>
+                        <p className="text-sm lg:text-lg font-bold leading-tight">Rwf. {item.price}</p>
                     </CardTitle>
-                    <CardDescription>
+                    <CardDescription className="text-sm">
                     {item.description}
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <img src="https://res.cloudinary.com/bn47/image/upload/v1737293968/holder_b8j3pp.jpg" className="object-fit w-full rounded-xl"/>
+                    <img src="https://res.cloudinary.com/bn47/image/upload/v1737293968/holder_b8j3pp.jpg" className="object-fit w-full rounded-sm"/>
                     
                 </CardContent>
                 <CardFooter>
+                  <div className="w-full">
                   {footer} 
+                  </div>
                 </CardFooter>
             </Card>)
             })
@@ -80,46 +82,28 @@ useEffect(()=>{
       <Carousel>
   <CarouselContent>
     <CarouselItem>
-    <section className="w-screen h-screen bg-[url('https://res.cloudinary.com/bn47/image/upload/v1731153180/nunu_sjf2bc.png')]">
-                <div className='bg-gray-800/50 w-full h-full flex flex-col justify-center items-left px-12'>
-                    <p className='text-6xl font-bold text-gray-200'>
+    <section className="h-72 object-fit w-screen lg:h-screen bg-[url('https://res.cloudinary.com/bn47/image/upload/v1731153180/nunu_sjf2bc.png')]">
+                <div className='bg-gray-800/50 w-full h-full flex flex-col justify-center items-center px-12'>
+                    <p className='lg:text-6xl text-3xl text-center font-bold text-gray-200'>
                       Shop together with confidence!
                     </p>
-                    <div className='w-1/2 '>
-                    <p className='text-sm text-gray-100'>
-                      Earn while you spend! Yes, with Ago shopping you can get profit from your colleagues and get the chance of getting a loan from the shop.
-                    </p>
+                    <div className=''>
                     <p className='p-4 font-bold leading-tight mt-6 bg-gray-200 text-gray-800 w-fit'>
-                    <a href="/login" >Get Started</a> 
+                    <a href="tel:*211#" >Get Started</a> 
                     </p>
                     </div>
                 </div>
         </section>
     </CarouselItem>
     <CarouselItem>
-    <section className="w-screen h-screen bg-[url('https://res.cloudinary.com/bn47/image/upload/v1737293968/holder_b8j3pp.jpg')]">
-                <div className='bg-gray-800/50 w-full h-full flex flex-col justify-center items-left px-12'>
-                    <p className='text-6xl font-bold text-gray-200'>
-                      Spend to earn!
-                    </p>
-                    <div className='w-1/2 '>
-                    <p className='text-sm text-gray-100'>
-                      Earn while you spend! Yes, with Ago shopping you can get profit from your colleagues and get the chance of getting a loan from the shop.
-                    </p>
-                    <p className='p-4 font-bold leading-tight mt-6 bg-gray-200 text-gray-800 w-fit'>
-                    <a href="/login" >Get Started</a> 
-                    </p>
-                    </div>
-                </div>
-        </section>
     </CarouselItem>
   </CarouselContent>
   <CarouselPrevious />
   <CarouselNext />
 </Carousel>
-<div className="px-12">
-<p className="font-bold text-4xl py-8">Browse all available products!</p>
-<div className="grid grid-cols-4 gap-4">
+<div className="px-4 lg:px-12 mt-4">
+<p className="font-bold text-xl text-center lg:text-4xl lg:py-8">Browse all available products!</p>
+<div className="grid grid-cols-2 lg:grid-cols-4 lg:gap-4 mt-4">
     {datagraphics}
 </div>
 </div>
