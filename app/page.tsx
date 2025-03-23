@@ -50,7 +50,7 @@ export default function Home() {
                     <CardTitle>
                         <p className="text-sm lg:text-lg font-bold leading-tight">Rwf. {item.price}</p>
                     </CardTitle>
-                    <CardDescription className="text-sm">
+                    <CardDescription className="">
                     {item.description}
                     </CardDescription>
                 </CardHeader>

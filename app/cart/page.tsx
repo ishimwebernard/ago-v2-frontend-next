@@ -19,7 +19,7 @@ import {
     TableRow,
   } from "@/components/ui/table"
 import React, {useState, useEffect} from "react"
-import {Plus, Minus} from 'lucide-react'
+import {Plus, Minus, ShoppingCart } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import axios from "axios"
 import { v4 as uuidv4 } from 'uuid';
@@ -32,7 +32,7 @@ import { useRouter } from 'next/navigation'
 
 export default function Cart() { 
 const [updateCombo, setUpdateCombo] = useState<any>([])
-let logedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null")
+let logedinUser;
 let router = useRouter()
 
   let proper:any[] = []
@@ -49,6 +49,7 @@ let router = useRouter()
 
     let CardGraphicsItem:React.FC<CardProps>  = ({item, tagNumber, allData, combo,updateComboCard}) =>{
         const [qty, setQty] = useState(1)
+        let kuantity = 1
         let propItem = item
         return (
             <Card key={uuidv4()}>
@@ -60,19 +61,23 @@ let router = useRouter()
                         <p>Rwf {propItem.price}</p>
                         <div className="flex gap-4 outline-dashed">
                             <Plus onClick={()=>{
-                               
-                                setQty(qty+1)
-                                combo[tagNumber].quantity = qty
+                               kuantity += 1
+                                setQty(kuantity)
+                                combo[tagNumber].quantity = kuantity
                                 updateComboCard(combo)
-                                console.log(updateCombo)
+                                console.log(combo)
+                                localStorage.setItem('cart', JSON.stringify(updateCombo))
 
 
                             }}/>
                             <p>{qty}</p>
                             <Minus onClick={()=>{
-                             setQty(qty-1)
-                             combo[tagNumber].quantity = qty
+                                kuantity = kuantity -1
+                             setQty(kuantity)
+                             combo[tagNumber].quantity = kuantity
                              updateComboCard(combo) 
+                             localStorage.setItem('cart', JSON.stringify(updateCombo))
+
                             }}/>
                         </div>
                     </div>
@@ -86,82 +91,7 @@ type MainType = {
     updateCombo: any,
     setUpdateCombo: React.Dispatch<React.SetStateAction<any>>
 }
-type MenuDisplayerType = {
-    updateCombo: any,
-}
-const MenuDisplayer: React.FC<MenuDisplayerType> = ({updateCombo}) =>{
-    let graphics = []
-    let tempTotal = 0
-    updateCombo.forEach((item, index)=>{
-        graphics.push( <TableRow>
-            <TableCell>{item.name}</TableCell>
-            <TableCell>{item.quantity}</TableCell>
-            <TableCell>{item.price}</TableCell>
-            <TableCell>{item.price * item.quantity}</TableCell>
-        </TableRow>
-        )
-        tempTotal = (tempTotal+(item.price*item.quantity))
-    })
-    
-    return (
- <div className="flex flex-col p-4 gap-y-4">
-           <Table>
-        <TableHeader>
-            <TableRow>
-                <TableHead>ITEM</TableHead>
-                <TableHead>QTY</TableHead>
-                <TableHead>U.P</TableHead>
-                <TableHead>TOTAL</TableHead>
-            </TableRow>
-        </TableHeader>
-        <TableBody>
-           {graphics}
-           <TableRow>
-            <TableCell>Overall</TableCell>
-            <TableCell></TableCell>
-            <TableCell></TableCell>
-            <TableCell>{tempTotal}</TableCell>
-           </TableRow>
-        </TableBody>
-    </Table>
-    <Toaster />
-    <Button onClick={async()=>{
 
-        let orderFormatter = {
-            customerId: logedinUser.id, 
-            shopkeeperId: updateCombo[0].shopkeeperId, 
-            items:updateCombo,
-            total: tempTotal
-        }
-        console.log(orderFormatter)
-        try{
-            const res = await axios({
-                url: 'http://localhost:3000/orders',
-                method: 'post',
-                data: orderFormatter
-            })
-            localStorage.removeItem('cart')
-            toast(
-                'Order Succesfully Submitted',{
-                description: 'Thank you for working with Ago Shopping, you can pick up your goods any time',
-                action:{
-                    label: "Ok",
-                    onClick: ()=>{
-                        router.push("/")
-                    }
-                }}
-            )
-
-        }catch(err){
-            console.log(err)
-        }
-       
-    }}>Checkout</Button>
-
- </div>
-        
-    )
-}
 let Main: React.FC<MainType> = ({updateCombo, setUpdateCombo}) =>{
     console.log(updateCombo)
     proper = []
@@ -174,23 +104,20 @@ let Main: React.FC<MainType> = ({updateCombo, setUpdateCombo}) =>{
     }
 
 return (
-<div className="grid grid-flow-col w-full gap-4">
-<div className="flex flex-col gap-4 col-span-2">
+<div className="w-full flex flex-col ">
+<div className="flex flex-col">
     {proper}
 </div>
-  <Card>
-        <CardHeader>
-            <CardTitle>Checkout Details</CardTitle>
-        </CardHeader>
-        <MenuDisplayer updateCombo={updateCombo}/>
-    
-    </Card>
+<Button onClick={()=>{
+    router.push('cart/checkout')
+}}>View Receipt and Payment</Button>
 </div>
       
     )
 }
 
     const fetchItems = () =>{
+        logedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null")
         let tempCartItems = JSON.parse(localStorage.getItem('cart') || "null") || [] 
         let globalThing = {
             activeItem: -1,
@@ -216,7 +143,13 @@ useEffect(()=>{
       <Menu />
 <div className="px-12">
 <p className="font-bold text-4xl py-8">Shopping Cart</p>
-<Main updateCombo={updateCombo} setUpdateCombo={setUpdateCombo}/>
+{updateCombo.length == 0 ? (<div className="flex flex-col items-center justify-center space-y-6">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-shopping-cart"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
+    <p className="text-2xl">Cart is Empty</p>
+    <Button onClick={()=>{
+        router.push('/')
+    }}>Back to Home Page</Button>
+</div>): (<Main updateCombo={updateCombo} setUpdateCombo={setUpdateCombo}/>)}
 </div>
 
 

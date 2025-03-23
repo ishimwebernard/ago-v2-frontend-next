@@ -147,7 +147,9 @@ findDetails();
   <div className="flex items-center justify-between py-4 px-2 lg:px-10">
       
       {/* <Icons.logo className="h-6 w-12" /> */}
+      <a href="/">
       <Image src={logoimage} className="lg:w-32 w-[75px] h-[50px]"/>
+      </a>
 
     <Dialog>
   <DialogTrigger>
