@@ -10,6 +10,8 @@ import {
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import {useState, useEffect} from "react"
 import { Button } from "@/components/ui/button"
+import { Toaster } from "@/components/ui/sonner"
+
 import axios from "axios"
   import { v4 as uuidv4 } from 'uuid';
 
@@ -89,7 +91,7 @@ useEffect(()=>{
                     </p>
                     <div className=''>
                     <p className='p-4 font-bold leading-tight mt-6 bg-gray-200 text-gray-800 w-fit'>
-                    <a href="tel:*211#" >Get Started</a> 
+                    <a href="tel:*211#" >Scroll to get Started</a> 
                     </p>
                     </div>
                 </div>
@@ -107,7 +109,7 @@ useEffect(()=>{
     {datagraphics}
 </div>
 </div>
-
+<Toaster />
 
     </div>
   )

@@ -14,6 +14,9 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import axios from "axios"
 import {useState} from "react"
 import { useRouter } from "next/navigation"
+import { toast } from "sonner"
+import { Toaster } from "@/components/ui/sonner"
+
 const meanings = {
   1: "customers",
   2: "shopkeepers",
@@ -21,52 +24,44 @@ const meanings = {
 }
 
 
-export function LoginForm({
+export function SignUpForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const router = useRouter()
   const [phonenumber, setPhoneNumber] = useState('')
   const [password, setPassword] = useState('')
-  const [role, setRole] = useState(1)
+  const [referrerId, setRefId] = useState('')
 
 
 
 
-  const login = async({phonenumber, password, role}:any)=>{
+  const signUp = async({phonenumber, password, referrerId}:any)=>{
     try{
-      let store = {
-        id: 0,
-        role: 0,
-        name: ''
-      }
+
       const auth = await axios({
         method: "post",
-        url: `http://localhost:3000/${role}/login`,
+        url: `http://localhost:3000/customers`,
         data: {phonenumber, password}
-      })
-      store = {...store, id: parseInt(auth.data.user.id), name: auth.data.user.name}
-      switch (role){
-        case "customers":
-          store = {...store, role: 3}
-          router.push(`/`)
-          break;
-        case "shopkeepers":
-          store = {...store, role: 2}
-          router.push(`/shopkeeper/${auth.data.user.id}`)
-          break;
-        case "managers":
-          store = {...store, role: 1}
-          router.push(`/manager/${auth.data.user.id}`)
-          break;
-        default:
-          console.log("break")
+      }) 
+          setTimeout(()=>{
+        router.push('/login')
+     }, 9000)
+      toast("Account Created", {
+        description: "You will be redirected to Login!",
+        action: {
+            label: "Ok"
+        },
+    })
 
-      }
-      localStorage.setItem("logedin-user", JSON.stringify(store))
-     
       
-    }catch(err){
+    }catch(err:any){
+        toast("Something went wrong", {
+            description: err.response.data.error,
+            action: {
+                label: "Ok"
+            },
+        })
       console.log(err)
     }
   
@@ -76,9 +71,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-2xl">Login</CardTitle>
+          <CardTitle className="text-2xl">Sign Up!</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Create an account for your Ago Shopping experience
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -110,46 +105,37 @@ export function LoginForm({
                   setPassword(e.target.value)
                 }} required />
               </div>
-              <RadioGroup defaultValue="customer">
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="customer" id="customer" onClick={(e)=>{
-      setRole(1)
-    }}/>
-    <Label htmlFor="customer">Customer</Label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="shopkeeper" id="shopkeeper" onClick={(e)=>{
-      setRole(2)
-    }}/>
-    <Label htmlFor="shopkeeper">Shop Keeper</Label>
-  </div>
-  <div className="flex items-center space-x-2">
-    <RadioGroupItem value="manager" id="manager" onClick={(e)=>{
-      setRole(3)
-    }}/>
-    <Label htmlFor="manager">Manager</Label>
-  </div>
-</RadioGroup>
+              <div className="grid gap-2">
+                <Label htmlFor="phone">Referrer ID</Label>
+                <Input
+                  id="refid"
+                  placeholder="000"
+                  onChange={(e)=>{
+                    setRefId(e.target.value)
+                  }}
+                  required
+                />
+              </div>
 
               <Button className="w-full" onClick={(e)=>{
                 e.preventDefault()
-                login({phonenumber, password, role: meanings[role]})
+                signUp({phonenumber, password, referrerId})
               }}>
-                Login
-              </Button>
-              <Button variant="outline" className="w-full">
-                Login with Google
+                Sign Up Now
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <a href="#" className="underline underline-offset-4">
-                Sign up
-              </a>
+              <p  className="underline underline-offset-4" onClick={()=>{
+                router.push('/login')
+              }}>
+                Login
+              </p>
             </div>
           </form>
         </CardContent>
       </Card>
+      <Toaster />
     </div>
   )
 }

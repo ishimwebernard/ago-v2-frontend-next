@@ -15,18 +15,14 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
-    DialogFooter,
     DialogHeader,
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
-  import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import {useState, useEffect} from "react"
 import axios from "axios"
 import { usePathname } from "next/navigation"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 export default function Shopkeeper(){
     const userId = usePathname().split('/')[2]   

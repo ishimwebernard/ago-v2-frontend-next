@@ -2,17 +2,10 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/manager-sidebar"
 import { usePathname } from "next/navigation"
-//import { useRouter } from "next/router";
 import {useEffect, useState} from "react"
 import axios from "axios"
 import {
-    Table,
-    TableBody,
-    TableCaption,
     TableCell,
-    TableFooter,
-    TableHead,
-    TableHeader,
     TableRow,
   } from "@/components/ui/table"
   import { Button } from "@/components/ui/button"
@@ -29,16 +22,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
-import { WarningProvider } from "@radix-ui/react-dialog"
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectLabel,
-    SelectTrigger,
-    SelectValue,
-  } from "@/components/ui/select"
   import {
     Tabs,
     TabsContent,
@@ -48,10 +31,6 @@ import {
 
 
 export default function Shopkeeper(){
-    const lePath = usePathname().split('/')[2]
-    //const router = useRouter()
-    const [stockGraphics, setStockGraphics] = useState([])
-    const [shopkeepers, setShopkeepers] = useState([])
 
     let editedItem = {
         name: '',

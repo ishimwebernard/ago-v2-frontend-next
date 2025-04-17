@@ -2,7 +2,6 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/shopkeeper-sidebar"
 import { usePathname } from "next/navigation"
-//import { useRouter } from "next/router";
 import {useEffect, useState} from "react"
 import axios from "axios"
 import {
@@ -10,7 +9,6 @@ import {
     TableBody,
     TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
@@ -29,7 +27,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
-import { WarningProvider } from "@radix-ui/react-dialog"
 
 
 

@@ -7,7 +7,6 @@ import { UserRound } from "lucide-react"
 import axios from "axios"
 import { Card,   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle, } from "@/components/ui/card"
 import { Badge} from "@/components/ui/badge" 

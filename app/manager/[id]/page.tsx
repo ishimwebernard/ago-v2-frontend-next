@@ -1,7 +1,6 @@
 "use client"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/manager-sidebar"
-import {useEffect} from "react"
 
 export default function Manager({params}:any) {
 

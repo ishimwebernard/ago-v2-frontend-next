@@ -1,28 +1,18 @@
 "use client"
 import Menu from "../../menu"
 import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
-import {
     Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableFooter,
+    TableBody,TableCell,
+
     TableHead,
     TableHeader,
     TableRow,
   } from "@/components/ui/table"
 import React, {useState, useEffect} from "react"
-import {Plus, Minus, ShoppingCart } from 'lucide-react'
+
 import { Button } from "@/components/ui/button"
 import axios from "axios"
-import { v4 as uuidv4 } from 'uuid';
+
 import { Toaster } from "@/components/ui/sonner"
 import { toast } from "sonner"
 import { useRouter } from 'next/navigation'
@@ -111,6 +101,7 @@ const MenuDisplayer: React.FC<MenuDisplayerType> = ({updateCombo}) =>{
         }
        
     }}>Checkout</Button>
+    <a className="p-2 text-sm font-regular text-center rounded-md leading-tight bg-primary text-primary-foreground shadow hover:bg-primary/90" href={"tel:*182*8*1*"+tempTotal+"#"}>Send Payment</a>
 
  </div>
         

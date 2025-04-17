@@ -11,13 +11,7 @@ import { Input } from "@/components/ui/input"
 import { useRouter } from 'next/navigation'
 
 import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
   NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 import {
     Dialog,
@@ -28,20 +22,10 @@ import {
     DialogTrigger,
   } from "@/components/ui/dialog"
   import {
-    Cloud,
     CreditCard,
-    Github,
     Keyboard,
-    LifeBuoy,
     LogOut,
-    Mail,
-    MessageSquare,
-    Plus,
-    PlusCircle,
-    Settings,
     User,
-    UserPlus,
-    Users,
   } from "lucide-react"
   import {
     DropdownMenu,
@@ -49,12 +33,8 @@ import {
     DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuPortal,
     DropdownMenuSeparator,
     DropdownMenuShortcut,
-    DropdownMenuSub,
-    DropdownMenuSubContent,
-    DropdownMenuSubTrigger,
     DropdownMenuTrigger,
   } from "@/components/ui/dropdown-menu"
 

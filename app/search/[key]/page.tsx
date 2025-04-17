@@ -1,7 +1,6 @@
 "use client"
 import Menu from "../../menu"
 import {React, useEffect, useState} from "react"
-import axios from "axios"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import {Button} from "@/components/ui/button"
 
@@ -16,7 +15,6 @@ type Found = {
 }
 
 export default  function Search({ params }: any){
-    const [found, setFound] = useState<Found | null> (null)
     const [foundGraphics, setFoundGraphics] = useState([])
     const key = params.key
 
