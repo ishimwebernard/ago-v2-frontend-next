@@ -2,6 +2,21 @@
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/manager-sidebar"
 import {useEffect, useState} from "react"
+
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+
+
 import axios from "axios"
 import {
     Table,
@@ -28,14 +43,20 @@ import { toast } from "sonner"
 export default function Shopkeeper(){
     const [customerGraphics, setCustomerGraphics] = useState([])
     const [shopkeepers, setShopkeepers] = useState([])
-
+    let shopkeeperdetails = {
+      name: '',
+      email: '',
+      password: '',
+      phonenumber: '',
+      managerid: 1
+    }
 
     useEffect(()=>{
         async function fetchStock(){
             const tempCustomers = []
             const customers = await axios({
                 method: 'get',
-                url: process.env.BASE_URL+'/customers'
+                url: 'https://v2-ago-2.onrender.com'+'/customers'
             })
             customers.data.forEach((item)=>{
               tempCustomers.push(
@@ -60,7 +81,7 @@ export default function Shopkeeper(){
                 let tempArray = []
                 const shopkeepers = await axios({
                     method: 'get',
-                    url: process.env.BASE_URL+'/shopkeepers',
+                    url: 'https://v2-ago-2.onrender.com'+'/shopkeepers',
                 })
                 shopkeepers.data.forEach((item: any)=>{
                     tempArray.push(
@@ -88,6 +109,87 @@ export default function Shopkeeper(){
         <main className="w-full">
           <SidebarTrigger />
        <div className="p-8">
+        <div>
+        <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Create a Shopkeeper</Button>
+      </DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <DialogHeader>
+          <DialogTitle>Add a new agent of the business</DialogTitle>
+          <DialogDescription>
+            Add below the details of the shopkeeper
+          </DialogDescription>
+        </DialogHeader>
+        <div className="grid gap-4 py-4">
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Name
+            </Label>
+            <Input
+              id="name"
+              placeholder="Pedro Duarte"
+              className="col-span-3"
+              onChange={(e)=>{
+                shopkeeperdetails = {...shopkeeperdetails, name: e.target.value}
+              }}
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="name" className="text-right">
+              Phone Number
+            </Label>
+            <Input
+              id="name"
+              placeholder="07000000"
+              className="col-span-3"
+              onChange={(e)=>{
+                shopkeeperdetails = {...shopkeeperdetails, phonenumber: e.target.value}
+              }}
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="username" className="text-right">
+              Email
+            </Label>
+            <Input
+              id="username"
+              className="col-span-3"
+              onChange={(e)=>{
+                shopkeeperdetails = {...shopkeeperdetails, email:e.target.value}
+              }}
+            />
+          </div>
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label htmlFor="username" className="text-right">
+              Default Password
+            </Label>
+            <Input
+              id="username"
+              className="col-span-3"
+              onChange={(e)=>{
+                shopkeeperdetails={...shopkeeperdetails, password: e.target.value}
+              }}
+            />
+          </div>
+        </div>
+        <DialogFooter>
+          <Button onClick={async()=>{
+            try{
+              const res = await axios({
+                method: 'post',
+                url: 'https://v2-ago-2.onrender.com/shopkeepers/create',
+                data: shopkeeperdetails
+              })
+              alert("Shopkeeper created, please refresh the page")
+            }catch(error){
+              alert("Something went wrong")
+            }
+          }}>Create</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+        </div>
        <Tabs defaultValue="customers" className="">
             <TabsList className="grid w-full grid-cols-2">
                 <TabsTrigger value="customers">Customers</TabsTrigger>

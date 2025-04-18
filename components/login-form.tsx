@@ -42,7 +42,7 @@ export function LoginForm({
       }
       const auth = await axios({
         method: "post",
-        url: `http://localhost:3000/${role}/login`,
+        url: `https://v2-ago-2.onrender.com/${role}/login`,
         data: {phonenumber, password}
       })
       store = {...store, id: parseInt(auth.data.user.id), name: auth.data.user.name}
@@ -67,6 +67,7 @@ export function LoginForm({
      
       
     }catch(err){
+      alert(err.response.data.message)
       console.log(err)
     }
   

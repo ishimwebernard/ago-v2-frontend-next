@@ -56,7 +56,7 @@ export default function Shopkeeper(){
             const tempStock = []
             const shopExistingStock = await axios({
                 method: 'get',
-                url: process.env.BASE_URL+'/getstockitems'
+                url: 'https://v2-ago-2.onrender.com'+'/getstockitems'
             })
             shopExistingStock.data.forEach((item)=>{
                 tempStock.push(
@@ -146,7 +146,7 @@ export default function Shopkeeper(){
             try{
                 const res = await axios({
                     method: 'put',
-                    url: process.env.BASE_URL+'/stockitems/'+item.id,
+                    url: 'https://v2-ago-2.onrender.com'+'/stockitems/'+item.id,
                     data: editedItem
                 })
                 toast("Item Updated Succesfully", {
@@ -168,7 +168,7 @@ export default function Shopkeeper(){
             try{
                 const res = await axios({
                     method: 'delete',
-                    url: process.env.BASE_URL+'/stockitems/'+item.id
+                    url: 'https://v2-ago-2.onrender.com'+'/stockitems/'+item.id
                 })
                 toast("Delete Succesful", {description: item.name + " was deleted succesfully!"})
                 window.location.reload()
@@ -194,7 +194,7 @@ export default function Shopkeeper(){
                 let tempArray = []
                 const shopkeepers = await axios({
                     method: 'get',
-                    url: process.env.BASE_URL+'/shopkeepers',
+                    url: 'https://v2-ago-2.onrender.com'+'/shopkeepers',
                 })
                 shopkeepers.data.forEach((item: any)=>{
                     tempArray.push(<option value={item.id}>{item.name}</option>)

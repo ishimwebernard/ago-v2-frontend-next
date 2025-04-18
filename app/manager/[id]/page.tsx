@@ -10,7 +10,7 @@ export default function Manager({params}:any) {
       <main>
         <SidebarTrigger />
         <div>
-            <p>This is it</p>
+            <p>Welcome Manager</p>
             <p>{params.id}</p>
         </div>
       </main>

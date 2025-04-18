@@ -80,7 +80,7 @@ const MenuDisplayer: React.FC<MenuDisplayerType> = ({updateCombo}) =>{
         console.log(orderFormatter)
         try{
             const res = await axios({
-                url: process.env.BASE_URL+'/orders',
+                url: 'https://v2-ago-2.onrender.com'+'/orders',
                 method: 'post',
                 data: orderFormatter
             })

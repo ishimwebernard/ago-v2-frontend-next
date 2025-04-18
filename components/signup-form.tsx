@@ -41,7 +41,7 @@ export function SignUpForm({
 
       const auth = await axios({
         method: "post",
-        url: `http://localhost:3000/customers`,
+        url: `https://v2-ago-2.onrender.com/customers`,
         data: {phonenumber, password}
       }) 
           setTimeout(()=>{
