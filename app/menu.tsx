@@ -61,10 +61,10 @@ const findDetails = () =>{
   if (logedinUser){
     switch (logedinUser.role){
       case 1:
-  
+        urlMaker = '/manager/'+logedinUser.id
       break;
       case 2:
-  
+        urlMaker = '/shopkeeper/'+logedinUser.id
       break;
       case 3:
         urlMaker = '/customer/'+logedinUser.id
@@ -109,6 +109,7 @@ const findDetails = () =>{
           localStorage.removeItem('cart')
             localStorage.removeItem('logedin-user')
             router.push('/')
+            window.location.reload()
           }}>
           <LogOut />
           <span>Log out</span>

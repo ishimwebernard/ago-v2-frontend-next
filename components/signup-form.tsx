@@ -31,18 +31,21 @@ export function SignUpForm({
   const router = useRouter()
   const [phonenumber, setPhoneNumber] = useState('')
   const [password, setPassword] = useState('')
-  const [referrerId, setRefId] = useState('')
+  const [referrerId, setRefId] = useState(0)
+  const [name, setName] = useState('')
 
 
 
 
-  const signUp = async({phonenumber, password, referrerId}:any)=>{
+
+
+  const signUp = async({phonenumber, password, referrerId, name}:any)=>{
     try{
 
       const auth = await axios({
         method: "post",
         url: `https://v2-ago-2.onrender.com/customers`,
-        data: {phonenumber, password}
+        data: {name, referrerId, phonenumber, password}
       }) 
           setTimeout(()=>{
         router.push('/login')
@@ -79,6 +82,17 @@ export function SignUpForm({
         <CardContent>
           <form>
             <div className="flex flex-col gap-6">
+            <div className="grid gap-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  placeholder="Marie Coutrois"
+                  onChange={(e)=>{
+                    setName(e.target.value)
+                  }}
+                  required
+                />
+              </div>
               <div className="grid gap-2">
                 <Label htmlFor="phone">Phone Number</Label>
                 <Input
@@ -119,14 +133,14 @@ export function SignUpForm({
 
               <Button className="w-full" onClick={(e)=>{
                 e.preventDefault()
-                signUp({phonenumber, password, referrerId})
+                signUp({phonenumber, password, referrerId,name})
               }}>
                 Sign Up Now
               </Button>
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <p  className="underline underline-offset-4" onClick={()=>{
+              <p  className="underline underline-offset-4 cursor-pointer" onClick={()=>{
                 router.push('/login')
               }}>
                 Login

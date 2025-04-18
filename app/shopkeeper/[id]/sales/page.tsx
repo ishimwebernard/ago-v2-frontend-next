@@ -67,7 +67,7 @@ export default function Shopkeeper(){
         </DialogTrigger>
         <DialogContent className="w-[1000px] h-auto">
           <DialogHeader>
-            <DialogTitle>Invoide # {item.id}</DialogTitle>
+            <DialogTitle>Invoice # {item.id}</DialogTitle>
             <DialogDescription>
               Details for a transaction done on {item.createdAt.split(".")[0].replaceAll("T", " at ")}
             </DialogDescription>

@@ -23,7 +23,10 @@ import { Button } from "@/components/ui/button"
     DialogTitle,
     DialogTrigger,
   } from "@/components/ui/dialog"
-
+  import { Card,   CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle, } from "@/components/ui/card"
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [orders, setOrders] = useState([])
   useEffect(()=>{
@@ -63,7 +66,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </DialogTrigger>
       <DialogContent className="w-[1000px]">
         <DialogHeader>
-          <DialogTitle>Invoide # {item.id}</DialogTitle>
+          <DialogTitle>Invoice # {item.id}</DialogTitle>
           <DialogDescription>
             Details for a transaction done on {item.createdAt.split(".")[0].replaceAll("T", " at ")}
           </DialogDescription>
