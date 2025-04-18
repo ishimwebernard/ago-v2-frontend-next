@@ -80,7 +80,7 @@ const MenuDisplayer: React.FC<MenuDisplayerType> = ({updateCombo}) =>{
         console.log(orderFormatter)
         try{
             const res = await axios({
-                url: 'http://localhost:3000/orders',
+                url: process.env.BASE_URL'+'/orders',
                 method: 'post',
                 data: orderFormatter
             })

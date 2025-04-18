@@ -34,7 +34,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         const loggedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null").id
       const data = await axios({
         method: 'GET',
-        url: 'http://localhost:3000/orders/customer/'+loggedinUser,
+        url: process.env.BASE_URL'+'/orders/customer/'+loggedinUser,
       })
 
       console.log(data)

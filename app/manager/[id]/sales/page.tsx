@@ -38,7 +38,7 @@ export default function Shopkeeper(){
           const loggedinUser = userId
         const data = await axios({
           method: 'GET',
-          url: 'http://localhost:3000/getallorders',
+          url: process.env.BASE_URL'+'/getallorders',
         })
   
         console.log(data)
@@ -108,7 +108,7 @@ export default function Shopkeeper(){
                 <Button onClick={async()=>{
                     console.log(newStat)
                     const res = await axios({
-                        url: 'http://localhost:3000/orders/'+item.id+'/status',
+                        url: process.env.BASE_URL'+'/orders/'+item.id+'/status',
                         method: 'put',
                         data:{status: newStat}
                     })

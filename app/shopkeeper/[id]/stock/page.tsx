@@ -58,7 +58,7 @@ export default function Shopkeeper(){
             const tempStock = []
             const shopExistingStock = await axios({
                 method: 'get',
-                url: 'http://localhost:3000/getstockitems/'+lePath
+                url: process.env.BASE_URL'+'/getstockitems/'+lePath
             })
             shopExistingStock.data.forEach((item)=>{
                 tempStock.push(
@@ -147,7 +147,7 @@ export default function Shopkeeper(){
             try{
                 const res = await axios({
                     method: 'put',
-                    url: 'http://localhost:3000/stockitems/'+item.id,
+                    url: process.env.BASE_URL'+'/stockitems/'+item.id,
                     data: editedItem
                 })
                 toast("Item Updated Succesfully", {
@@ -169,7 +169,7 @@ export default function Shopkeeper(){
             try{
                 const res = await axios({
                     method: 'delete',
-                    url: 'http://localhost:3000/stockitems/'+item.id
+                    url: process.env.BASE_URL'+'/stockitems/'+item.id
                 })
                 toast("Delete Succesful", {description: item.name + " was deleted succesfully!"})
                 window.location.reload()
@@ -244,7 +244,7 @@ export default function Shopkeeper(){
                 try{
                   const res = await axios({
                     method: 'post',
-                    url: 'http://localhost:3000/stockitems',
+                    url: process.env.BASE_URL'+'/stockitems',
                     data: newItem
                   })
                   toast("Stock Item Created Succesfully", {
