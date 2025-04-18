@@ -22,9 +22,10 @@ import { useRouter } from 'next/navigation'
 
 export default function Checkout() { 
 const [updateCombo, setUpdateCombo] = useState<any>([])
-const logedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null")
+let logedinUser:any;
 useEffect(()=>{
-    setUpdateCombo(JSON.parse(localStorage.getItem("cart") || "null"))
+    logedinUser = JSON.parse(window.localStorage.getItem("logedin-user") || "null")
+    setUpdateCombo(JSON.parse(window.localStorage.getItem("cart") || "null"))
 }, [])
 
 const router = useRouter()
