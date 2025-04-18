@@ -35,7 +35,7 @@ export default function Shopkeeper(){
             const tempCustomers = []
             const customers = await axios({
                 method: 'get',
-                url: process.env.BASE_URL'+'/customers'
+                url: process.env.BASE_URL+'/customers'
             })
             customers.data.forEach((item)=>{
               tempCustomers.push(
@@ -60,7 +60,7 @@ export default function Shopkeeper(){
                 let tempArray = []
                 const shopkeepers = await axios({
                     method: 'get',
-                    url: process.env.BASE_URL'+'/shopkeepers',
+                    url: process.env.BASE_URL+'/shopkeepers',
                 })
                 shopkeepers.data.forEach((item: any)=>{
                     tempArray.push(

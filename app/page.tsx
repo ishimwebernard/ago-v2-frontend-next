@@ -23,7 +23,7 @@ export default function Home() {
     cartItems = JSON.parse(localStorage.getItem('cart') || "null") || [] 
     try{
         const response = await axios({
-            url: process.env.BASE_URL'+'/getstockitems',
+            url: process.env.BASE_URL+'/getstockitems',
             method: 'GET'
         })
  
