@@ -29,10 +29,10 @@ export default function Home() {
  
         if (response) {
             const proper = response.data
-            let properGraphics:any[] = []
+            const properGraphics:any[] = []
             let footer:any;
             proper.forEach((item, index)=>{
-              let foundItem = cartItems.find(it => item.id === it.id)
+              const foundItem = cartItems.find(it => item.id === it.id)
               if (foundItem){
                 footer = (<Button disabled>Remove to Cart</Button>)
                 setRefresher(!refresher)

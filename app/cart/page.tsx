@@ -14,11 +14,11 @@ import { useRouter } from 'next/navigation'
 export default function Cart() { 
 const [updateCombo, setUpdateCombo] = useState<any>([])
 let logedinUser;
-let router = useRouter()
+const router = useRouter()
 
   let proper:any[] = []
   let cartItems:any[] = []
-  let globalRawData:any[] = []
+  const globalRawData:any[] = []
 
   type CardProps = {
     item: any,
@@ -28,10 +28,10 @@ let router = useRouter()
     updateComboCard: React.Dispatch<React.SetStateAction<any>>
   }
 
-    let CardGraphicsItem:React.FC<CardProps>  = ({item, tagNumber, allData, combo,updateComboCard}) =>{
+    const CardGraphicsItem:React.FC<CardProps>  = ({item, tagNumber, allData, combo,updateComboCard}) =>{
         const [qty, setQty] = useState(1)
         let kuantity = 1
-        let propItem = item
+        const propItem = item
         return (
             <Card key={uuidv4()}>
             <CardContent>
@@ -73,7 +73,7 @@ type MainType = {
     setUpdateCombo: React.Dispatch<React.SetStateAction<any>>
 }
 
-let Main: React.FC<MainType> = ({updateCombo, setUpdateCombo}) =>{
+const Main: React.FC<MainType> = ({updateCombo, setUpdateCombo}) =>{
     console.log(updateCombo)
     proper = []
     if(updateCombo){
@@ -99,8 +99,8 @@ return (
 
     const fetchItems = () =>{
         logedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null")
-        let tempCartItems = JSON.parse(localStorage.getItem('cart') || "null") || [] 
-        let globalThing = {
+        const tempCartItems = JSON.parse(localStorage.getItem('cart') || "null") || [] 
+        const globalThing = {
             activeItem: -1,
             data: []
         }

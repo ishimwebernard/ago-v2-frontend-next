@@ -41,7 +41,7 @@ export default function Shopkeeper(){
         description: ''
     }
 
-    let newItem =  { shopkeeperId: 0, 
+    const newItem =  { shopkeeperId: 0, 
       name: '', 
       quantity: 0, 
       price: 0, 
@@ -191,7 +191,7 @@ export default function Shopkeeper(){
 
         async function findShopkeepers(){
             try{
-                let tempArray = []
+                const tempArray = []
                 const shopkeepers = await axios({
                     method: 'get',
                     url: 'https://v2-ago-2.onrender.com'+'/shopkeepers',

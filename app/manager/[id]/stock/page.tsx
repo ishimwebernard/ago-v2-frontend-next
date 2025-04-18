@@ -192,7 +192,7 @@ export default function Shopkeeper(){
 
         async function findShopkeepers(){
             try{
-                let tempArray = []
+                const tempArray = []
                 const shopkeepers = await axios({
                     method: 'get',
                     url: 'https://v2-ago-2.onrender.com'+'/shopkeepers',

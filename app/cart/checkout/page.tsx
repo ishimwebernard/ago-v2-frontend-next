@@ -22,18 +22,18 @@ import { useRouter } from 'next/navigation'
 
 export default function Checkout() { 
 const [updateCombo, setUpdateCombo] = useState<any>([])
-let logedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null")
+const logedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null")
 useEffect(()=>{
     setUpdateCombo(JSON.parse(localStorage.getItem("cart") || "null"))
 }, [])
 
-let router = useRouter()
+const router = useRouter()
 
 type MenuDisplayerType = {
     updateCombo: any,
 }
 const MenuDisplayer: React.FC<MenuDisplayerType> = ({updateCombo}) =>{
-    let graphics = []
+    const graphics = []
     let tempTotal = 0
     updateCombo.forEach((item, index)=>{
         graphics.push(
@@ -71,7 +71,7 @@ const MenuDisplayer: React.FC<MenuDisplayerType> = ({updateCombo}) =>{
     <Toaster />
     <Button onClick={async()=>{
 
-        let orderFormatter = {
+        const orderFormatter = {
             customerId: logedinUser.id, 
             shopkeeperId: updateCombo[0].shopkeeperId, 
             items:updateCombo,
@@ -108,9 +108,9 @@ const MenuDisplayer: React.FC<MenuDisplayerType> = ({updateCombo}) =>{
     )
 }
 
-  let proper:any[] = []
-  let cartItems:any[] = []
-  let globalRawData:any[] = []
+  const proper:any[] = []
+  const cartItems:any[] = []
+  const globalRawData:any[] = []
 
   return (
     <div>

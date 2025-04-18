@@ -54,7 +54,7 @@ const router = useRouter()
   useEffect(()=>{
 const findDetails = () =>{
   let urlMaker = ''
-  let cartItems:any[] = []
+  const cartItems:any[] = []
   const logedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null")
   console.log("Loged in User===>", logedinUser)
   

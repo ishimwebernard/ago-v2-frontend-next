@@ -33,7 +33,7 @@ export default function Shopkeeper(){
       
       const getOrders = async()=>{
 
-        let orderGraph = []
+        const orderGraph = []
         try{
           const loggedinUser = userId
         const data = await axios({
@@ -44,7 +44,7 @@ export default function Shopkeeper(){
         console.log(data)
         
         data.data.forEach((item, index)=>{
-          let itemsForOrder = []
+          const itemsForOrder = []
           item.OrderItems.forEach((orderItem, i)=>{
             itemsForOrder.push(<TableRow>
               <TableCell>{orderItem.stockItemId}</TableCell>

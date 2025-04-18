@@ -29,7 +29,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   useEffect(()=>{
     
     const getOrders = async()=>{
-      let orderGraph = []
+      const orderGraph = []
       try{
         const loggedinUser = JSON.parse(localStorage.getItem("logedin-user") || "null").id
       const data = await axios({
@@ -40,7 +40,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       console.log(data)
       
       data.data.forEach((item, index)=>{
-        let itemsForOrder = []
+        const itemsForOrder = []
         item.OrderItems.forEach((orderItem, i)=>{
           itemsForOrder.push(<TableRow>
             <TableCell>{orderItem.stockItemId}</TableCell>

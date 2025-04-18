@@ -24,7 +24,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
 
   useEffect(()=>{
-        let dynamicGraphics = []
+        const dynamicGraphics = []
      const getCustomerInfo = async (id:string)=>{
   try{
     const data = await axios({
